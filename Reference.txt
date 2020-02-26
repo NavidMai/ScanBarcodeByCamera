@@ -1,0 +1,4 @@
+pip3 install opencv-python-headless
+pip3 install zxing
+
+https://dotblogs.com.tw/shaynling/2017/12/28/091936
