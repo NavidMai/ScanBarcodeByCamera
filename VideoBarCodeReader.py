@@ -3,7 +3,7 @@ import cv2
 import zxing
 
 
-def get_images_from_video(video_name, time_F):
+def get_images_from_video(video_name, time_frames):
     video_images = []
     vc = cv2.VideoCapture(video_name)
     c = 1
@@ -15,32 +15,38 @@ def get_images_from_video(video_name, time_F):
     while rval:
         rval, video_frame = vc.read()
 
-        if (c % time_F == 0):  # Capture every few frames
+        if c % time_frames == 0:  # Capture every few frames
             video_images.append(video_frame)
         c = c + 1
     vc.release()
 
     return video_images
 
-time_F = 5 #The smaller time_F, the more frames
-video_name = 'navid.mov' #Video name
-video_images = get_images_from_video(video_name, time_F)
 
-for i in range(0, len(video_images)): #Show the images
-    cv2.imshow('windows', video_images[i])
+frames = 5  # The smaller time_f, the more frames
+video = 'Test_Video.mov'  # Video name
+images = get_images_from_video(video, frames)
+
+# Show the images
+for i in range(0, len(images)):
+    cv2.imshow('windows', images[i])
     cv2.waitKey(100)
 
     image = "output.jpg"
-    cv2.imwrite(image, video_images[i])
+    cv2.imwrite(image, images[i])
     cv2.waitKey(100)
 
     reader = zxing.BarCodeReader()
     barcode = reader.decode(image)
-    if barcode != None:
+    if barcode is not None:
         print(barcode.parsed)
     else:
         print("No QR code or Barcode")
 
-cv2.destroyAllWindows()
-os.remove('output.jpg')
+    if cv2.waitKey(1000) == 27:
+        cv2.destroyAllWindows()
+        os.remove('output.jpg')
+        break
 
+# cv2.destroyAllWindows()
+# os.remove('output.jpg')
