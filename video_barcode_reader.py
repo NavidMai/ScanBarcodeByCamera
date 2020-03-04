@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import cv2
 import zxing
@@ -47,6 +48,3 @@ for i in range(0, len(images)):
         cv2.destroyAllWindows()
         os.remove('output.jpg')
         break
-
-# cv2.destroyAllWindows()
-# os.remove('output.jpg')
