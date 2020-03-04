@@ -6,8 +6,6 @@ import time
 import zxing
 import threading
 
-#Camera RTSP
-URL = "rtsp://172.16.22.100:554/live01/ss-Tunnel/media?stream=5&channel=1"
 
 # Receive camera streaming images
 class ipcamCapture:
@@ -36,40 +34,65 @@ class ipcamCapture:
 
         self.capture.release()
 
-# Connect to the camera
+# Create .csv File
+def create_csv():
+  with open(csv_file, 'w', newline='') as csvfile:
+     writer = csv.writer(csvfile)
+     writer.writerow(["Time", "Barcode Content", "Image"])
+
+# Write .csv File
+def write_csv(time, barcode_content, image):
+  with open(csv_file, 'a+') as f:
+    csv_write = csv.writer(f)
+    data_row = [time, barcode_content, image]
+    csv_write.writerow(data_row)
+
+# Camera RTSP
+URL = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
+# URL = "rtsp://172.16.22.100:554/live01/ss-Tunnel/media?stream=5&channel=1"
+image_file = "Barcode_Tag"
+csv_file = image_file + "/Record.csv"
+image_tmp = "output.png"
+
+# Check the file path of the image of Tag which has a barcode or QR code appear.
+if os.path.isdir(image_file):
+    print("The image file exists!")
+else:
+    print("The image file does not exist!")
+    print("Create a new image file......")
+    os.mkdir(image_file)
+
+if os.path.isfile(csv_file):
+    print("The Record file exists!")
+else:
+    print("The Record file does not exist!")
+    print("Create a new Record file......")
+    create_csv()
+
+# Use a loop to capture images until the user click the Esc key
 ipcam = ipcamCapture(URL)
 ipcam.start()
 time.sleep(1)
-
-# Check the file path of the image of Tag which has a barcode or QR code appear.
-filepath = "Barcode_Tag"
-if os.path.isdir(filepath):
-    print("The file path exists!")
-else:
-    print("The file path does not exist!")
-    print("Create a new file path......")
-    os.mkdir(filepath)
-
-# Use a loop to capture images until the user click the Esc key
 print(" ")
 print("Start analysis:")
 print("========================================================================")
-image_tmp = "output.png"
 
 while True:
     # Get the latest image
     I = ipcam.getframe()
     cv2.imshow('Camera Viewer', I) # Show the image
     cv2.imwrite(image_tmp, I)
+    # Scan Barcode and QR code
     reader = zxing.BarCodeReader()
     barcode = reader.decode(image_tmp)
 
     if barcode != None:
         print(barcode.parsed)
         nowTime = time.strftime("%Y%m%d%H%M%S")
-        image_of_tag = filepath + "/Tag_" + nowTime + ".png"
+        image_of_tag = image_file + "/Tag_" + nowTime + ".png"
         print("Image Saved: " + image_of_tag)
         cv2.imwrite(image_of_tag, I)
+        write_csv(nowTime, barcode.parsed, image_of_tag)
     else:
         print("No QR code or Barcode")
 
