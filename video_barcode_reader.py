@@ -24,7 +24,7 @@ def get_images_from_video(video_name, time_frames):
 
 
 frames = 5  # The smaller time_f, the more frames
-video = 'Test_Video.mov'  # Video name
+video = 'test_video.mov'  # Video name
 images = get_images_from_video(video, frames)
 
 # Show the images
