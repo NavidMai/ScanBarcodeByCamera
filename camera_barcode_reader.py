@@ -50,12 +50,13 @@ def write_csv(data_time, barcode_content, image_of_tag_file):
         csv_write.writerow(data_row)
 
 
-# Camera RTSP
+# The RTSP of Camera
 camera_rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
-# camera_rtsp = "rtsp://172.16.22.100:554/live01/ss-Tunnel/media?stream=5&channel=1"
+
+
 image_file = "Barcode_Tag"
 csv_file = image_file + "/Record.csv"
-image_tmp = "output.png"
+image_tmp = "Data/output.png"
 
 # Check the file path of the image of Tag which has a barcode or QR code appear.
 if os.path.isdir(image_file):
@@ -104,5 +105,5 @@ while True:
     if cv2.waitKey(1000) == 27:
         cv2.destroyAllWindows()
         ipcam.stop()
-        os.remove('output.png')
+        os.remove('Data/output.png')
         break

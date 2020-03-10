@@ -24,8 +24,8 @@ def get_images_from_video(video_name, time_frames):
     return video_images
 
 
-frames = 5  # The smaller time_f, the more frames
-video = 'test_video.mov'  # Video name
+frames = 5  # The smaller frames, the more frames
+video = 'Data/test_video.mov'  # Video name
 images = get_images_from_video(video, frames)
 
 # Show the images
@@ -33,7 +33,7 @@ for i in range(0, len(images)):
     cv2.imshow('windows', images[i])
     cv2.waitKey(100)
 
-    image = "output.jpg"
+    image = "Data/output.png"
     cv2.imwrite(image, images[i])
     cv2.waitKey(100)
 
@@ -46,5 +46,5 @@ for i in range(0, len(images)):
 
     if cv2.waitKey(1000) == 27:
         cv2.destroyAllWindows()
-        os.remove('output.jpg')
+        os.remove('Data/output.png')
         break
