@@ -82,12 +82,14 @@ print("Start analysis:")
 print("========================================================================")
 
 while True:
+    # tStart = time.time()
     # Get the latest image
     image = ipcam.getframe()
 
     # Show the image
     cv2.imshow('Camera Viewer', image)
     cv2.imwrite(image_tmp, image)
+
     # Scan Barcode and QR code
     reader = zxing.BarCodeReader()
     barcode = reader.decode(image_tmp)
