@@ -107,5 +107,5 @@ while True:
     if cv2.waitKey(1000) == 27:
         cv2.destroyAllWindows()
         ipcam.stop()
-        os.remove('Data/output.png')
+        os.remove(image_tmp)
         break

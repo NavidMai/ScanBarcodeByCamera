@@ -12,7 +12,6 @@ import csv
 rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
 image_file = "Barcode"
 csv_file = image_file + "/Record.csv"
-frame_tmp = "output.png"
 found = set()
 
 if not os.path.isdir(image_file):
@@ -24,6 +23,7 @@ if not os.path.isfile(csv_file):
         writer.writerow(["Time", "Barcode Type", "Barcode Content", "Image"])
 
 print("[INFO] starting video stream...")
+print("====================================================================")
 vs = VideoStream(rtsp).start()
 time.sleep(2.0)
 
@@ -56,12 +56,14 @@ while True:
             with open(csv_file, 'a+') as f:
                 csv_write = csv.writer(f)
                 nowDate = time.strftime("%Y-%m-%d_%H%M%S")
+                nowTime = time.strftime("%Y-%m-%d %H:%M:%S")
                 image_of_tag = image_file + "/" + nowDate + ".png"
                 cv2.imwrite(image_of_tag, frame)
-                data_row = [nowDate, barcodeType, barcodeData, image_of_tag]
+                data_row = [nowTime, barcodeType, barcodeData, image_of_tag]
                 csv_write.writerow(data_row)
                 found.add(barcodeData)
                 print(" ")
+                print("Time: " + nowTime)
                 print("Barcode Detected: " + barcodeData + " (Type: " + barcodeType + ")")
                 print("Image Saved: " + image_of_tag)
 
@@ -74,6 +76,7 @@ while True:
         break
 
 # close the output CSV file do a bit of cleanup
+print("====================================================================")
 print("[INFO] cleaning up...")
 cv2.destroyAllWindows()
 vs.stop()
