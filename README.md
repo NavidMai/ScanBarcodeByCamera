@@ -24,3 +24,4 @@ Reference:
 2. Install zxing:
 Step 1: Installing Zxing
                 $ pip3 install zxing
+
