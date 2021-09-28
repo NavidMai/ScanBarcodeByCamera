@@ -7,10 +7,12 @@ Reference:
 3. https://www.pyimagesearch.com/2018/05/21/an-opencv-barcode-and-qr-code-scanner-with-zbar/
 
 1. Installing ZBar (with Python bindings) for barcode decoding
-    Step 1: Installing ZBar for Ubuntu
-                    $ sudo apt-get install libzbar0
-                Installing ZBar for macOS
-                    $ brew install zbar
+    Step 1: 
+	1. Installing ZBar for Ubuntu
+		$ sudo apt-get install libzbar0
+
+         2. Installing ZBar for macOS
+                 $ brew install zbar
     
     Step 2: Install pyzbar
                     $ pip3 install pyzbar
@@ -20,8 +22,5 @@ Reference:
 
     Step 4: Installing OpenCV for Python
                     $ pip3 install opencv-python-headless
-
-2. Install zxing:
-Step 1: Installing Zxing
-                $ pip3 install zxing
-
+	
+    Step 5: pip3 install numpy

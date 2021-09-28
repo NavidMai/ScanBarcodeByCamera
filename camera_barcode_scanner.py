@@ -10,12 +10,12 @@ import csv
 
 # initialize the video stream and allow the camera sensor to warm up
 
-rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
+# rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
 
 # rtsp = "rtsp://root:camera@172.16.26.86:554/stream/profile0=u"
 
 # Dahua Test Camera
-# rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
+rtsp = "rtsp://admin:admin@172.16.12.240:554/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif"
 
 # IronYun Right Front Door
 # rtsp = "rtsp://Admin:1234@172.16.12.213/h264"
